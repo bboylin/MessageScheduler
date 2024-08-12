@@ -28,5 +28,6 @@ class SyncBarrierScheduler : AbsMessageScheduler() {
         }
 
         removeSyncBarrierMethod!!.invoke(looper.queue, token)
+        Log.d(TAG, "removeSyncBarrier success")
     }
 }
