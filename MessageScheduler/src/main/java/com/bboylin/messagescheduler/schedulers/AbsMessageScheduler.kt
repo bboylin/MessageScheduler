@@ -1,24 +1,21 @@
-package com.bboylin.messagescheduler
+package com.bboylin.messagescheduler.schedulers
 
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.os.MessageQueue
 import android.util.Log
+import com.bboylin.messagescheduler.MessageDispatchListener
+import com.bboylin.messagescheduler.TAG
 import java.lang.Exception
 import java.lang.reflect.Field
 
 abstract class AbsMessageScheduler : MessageDispatchListener {
     private var enable = false
-    private val msgField: Field = MessageQueue::class.java.getDeclaredField("mMessages")
-    protected val nextField: Field = Message::class.java.getDeclaredField("next")
+    private var msgField: Field? = null
+    protected var nextField: Field? = null
     protected val looper: Looper = Looper.getMainLooper()
     protected val handler: Handler = Handler(looper)
-
-    constructor() {
-        msgField.isAccessible = true
-        nextField.isAccessible = true
-    }
 
     fun setEnable(e: Boolean) {
         enable = e
@@ -39,7 +36,11 @@ abstract class AbsMessageScheduler : MessageDispatchListener {
         try {
             // move our high priority message to the front of the queue
             val queue = looper.queue
-            var message: Message? = msgField.get(queue) as Message?
+            if (msgField==null) {
+                msgField = MessageQueue::class.java.getDeclaredField("mMessages")
+                msgField!!.isAccessible = true
+            }
+            var message: Message? = msgField!!.get(queue) as Message?
             var preMessage: Message? = null
             while (message != null) {
                 if (isHighPriorityMessage(message)) {
@@ -48,8 +49,12 @@ abstract class AbsMessageScheduler : MessageDispatchListener {
                     }
                     break
                 } else {
+                    if (nextField==null) {
+                        nextField = Message::class.java.getDeclaredField("next")
+                        nextField!!.isAccessible = true
+                    }
                     preMessage = message
-                    message = nextField.get(message) as Message?
+                    message = nextField!!.get(message) as Message?
                 }
             }
         } catch (e: Exception) {

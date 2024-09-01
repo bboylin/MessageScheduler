@@ -1,8 +1,9 @@
-package com.bboylin.messagescheduler
+package com.bboylin.messagescheduler.schedulers
 
 import android.os.Message
 import android.os.MessageQueue
 import android.util.Log
+import com.bboylin.messagescheduler.TAG
 import java.lang.reflect.Method
 
 class SyncBarrierScheduler : AbsMessageScheduler() {

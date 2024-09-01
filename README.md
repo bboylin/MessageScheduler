@@ -12,7 +12,7 @@
 
         fun isLaunchActivity(msg: Message): Boolean {
             return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1) {
-                if (msg.what === EXECUTE_TRANSACTION && msg.obj != null) {
+                if (msg.what == EXECUTE_TRANSACTION && msg.obj != null) {
                     try {
                         if (null == method) {
                             val clazz =
@@ -33,9 +33,9 @@
                         Log.e(TAG, "[ActivityThreadHacker isLaunchActivity] %s", e)
                     }
                 }
-                msg.what === LAUNCH_ACTIVITY
+                msg.what == LAUNCH_ACTIVITY
             } else {
-                msg.what === LAUNCH_ACTIVITY || msg.what === RELAUNCH_ACTIVITY
+                msg.what == LAUNCH_ACTIVITY || msg.what == RELAUNCH_ACTIVITY
             }
         }
 ```
