@@ -43,7 +43,7 @@ class SplashActivity : ComponentActivity() {
                             Log.d(TAG, "SplashActivity sleep 200ms $i time")
                         })
                     }
-//                    LooperMonitor.enableLifecycleSchedule()
+                    LooperMonitor.enableLifecycleSchedule()
                     LooperMonitor.start()
                     startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                 }

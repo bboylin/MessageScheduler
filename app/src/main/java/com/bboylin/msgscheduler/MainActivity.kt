@@ -6,16 +6,9 @@ import android.os.Looper
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.bboylin.messagescheduler.LooperMonitor
 import com.bboylin.messagescheduler.TAG
-import com.bboylin.msgscheduler.ui.theme.MsgSchedulerTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +31,8 @@ class MainActivity : ComponentActivity() {
                 Log.d(TAG, "MainActivity sleep 200ms $i time")
             })
         }
-//        LooperMonitor.disableLifecycleSchedule()
-//        LooperMonitor.enableSyncBarrierSchedule()
+        LooperMonitor.disableLifecycleSchedule()
+        LooperMonitor.enableSyncBarrierSchedule()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
